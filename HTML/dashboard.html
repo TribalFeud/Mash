@@ -1,0 +1,157 @@
+<html>
+
+<head>
+	<title> Dashboard </title>
+	<style>
+		body {
+			font-family: "TheSansMono Office", "Menlo";
+			/*  font-size: 0.33rem; */
+			background-color: #f7f7f7;
+			color: #313131;
+			margin-top: 4rem;
+			margin-right: 4rem;
+			margin-left: 4rem;
+			margin-bottom: 4rem;
+		}
+
+		a {
+			color: #313131;
+		}
+
+		a:hover,
+		a:focus {
+			color: #007acc;
+		}
+
+		h1 {
+			font-size: 0.95rem;
+		}
+
+		h2 {
+			font-size: 0.95rem;
+		}
+
+		h3 {
+			font-size: 0.95rem;
+		}
+
+		table {
+			border-spacing: 5px;
+		}
+		/* cellspacing */
+
+		th,
+		td {
+			padding: 5px;
+			font-size: 12
+		}
+	</style>
+</head>
+
+<body>
+	<table style="width:50%" id="dataTable" border="1" class="sortable" align="center">
+		<tr>
+			<th>Id</th>
+			<th>Description</th>
+			<th>Channel</th>
+			<th>URL</th>
+			<th>Download</th>
+			<th>Mash it</th>
+			<th>Remove</th>
+		</tr>
+	</table>
+
+	<script>
+		var graph = {};
+		function callback(data) {
+
+			graph = data;
+
+			var keys = Object.keys(data)
+
+			keys.forEach(function (key) {
+
+				buildRow(data[key]);
+				//Test my template
+			});
+
+		}
+
+		function buildRow(node) {
+			
+			//get table object in HTML	
+			var table = document.getElementById("dataTable");
+			//create row
+			var row = table.insertRow(table.rows.length);
+
+			//build cells in rows
+			var idCell = row.insertCell(0);
+			var descriptCell = row.insertCell(1);
+			var creatorNameCell = row.insertCell(2);
+			var urlCell = row.insertCell(3);
+			var downloadCell = row.insertCell(4);
+			var mashCell = row.insertCell(5);
+			var removeCell = row.insertCell(6);
+			//give cells values
+			idCell.innerHTML = node.vidid + '<br/><img src="' + node.thumbnail + '" title="' + node.title + '" />';
+			descriptCell.innerHTML = node.description;
+			creatorNameCell.innerHTML = node.creatorName;
+			urlCell.innerHTML = '<a href="' + node.url + '" target="_blank>" >' + node.url + '</a>';
+			if (!node.download) {
+				var btn = document.createElement("BUTTON");
+				var t = document.createTextNode("Download");
+				btn.appendChild(t);
+				btn.onclick = function () {
+
+					btn.title = "download";
+					window.open('./download?id=' + node.vidid);
+
+				};
+				downloadCell.appendChild(btn);
+			} else {
+				downloadCell.innerHTML = '<a href="' + node.download + '" target="_blank" >' + node.download + '</a>';
+			}
+			if (node.download && !node.mash && node.download != 'Running' && node.download != 'Failed' && node.download != 'Download File!') {
+				var btn = document.createElement("BUTTON");
+				var t = document.createTextNode("Mash It");
+				btn.onclick = function () {
+
+					btn.title = "Mash It";
+					window.open('./mash?id=' + node.vidid + '&maskType=' + select.options[select.selectedIndex].value);
+				};
+				btn.appendChild(t);
+				var select = document.createElement("select")
+				var option = document.createElement("option")
+				option.text = "White Mask";
+				option.value = "white_mask.png";
+				select.add(option);
+
+				mashCell.appendChild(select);
+				mashCell.appendChild(btn);
+			} else if (!node.download && !node.mash){
+				mashCell.innerHTML = 'Download File!';
+			} else if(node.download == 'Running' || node.download == 'Failed'){
+				mashCell.innerHTML = 'Download File!';
+			}
+			else{
+
+				mashCell.innerHTML = '<a href="' + node.mash + '" target="_blank">' + node.mash + '</a>';
+			}
+			//delete button
+		
+				var btn = document.createElement("BUTTON");
+				var t = document.createTextNode("Delete");
+				btn.onclick = function () {
+
+					btn.title = "Delete Video";
+					window.open('./remove?id=' + node.vidid);
+				};
+				btn.appendChild(t);
+				removeCell.appendChild(btn);
+			
+		}
+	</script>
+	<script type="application/javascript" src="./graph"></script>
+</body>
+
+</html>

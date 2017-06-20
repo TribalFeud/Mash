@@ -1,0 +1,92 @@
+<html>
+
+<head>
+	<title> Search for Video(s) </title>
+	<style>
+		body {
+			font-family: "TheSansMono Office", "Menlo";
+			/*  font-size: 0.33rem; */
+			background-color: #f7f7f7;
+			color: #313131;
+			margin-top: 4rem;
+			margin-right: 4rem;
+			margin-left: 4rem;
+			margin-bottom: 4rem;
+		}
+
+		a {
+			color: #313131;
+		}
+
+		a:hover,
+		a:focus {
+			color: #007acc;
+		}
+
+		h1 {
+			font-size: 0.95rem;
+		}
+
+		h2 {
+			font-size: 0.95rem;
+		}
+
+		h3 {
+			font-size: 0.95rem;
+		}
+
+		table {
+			border-spacing: 5px;
+		}
+		/* cellspacing */
+
+		th,
+		td {
+			padding: 5px;
+			font-size: 12
+		}
+	</style>
+</head>
+
+<body>
+	<form name="myForm" action="./search" method="Get" onSubmit= 'return check()'>
+		<table align="center">
+			<tr>
+				<td colspan="2" style="text-align: center">Search Youtube for Video(s).</td>
+			</tr>
+			<tr>
+				<td>Search</td>
+				<td>Rec. Count (50 max) </td>
+			</tr>
+			<tr>
+				<td><input type="text" name="q" value="" required></td>
+				<td><input type="text" name="r" value="50" size="5" required></td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align: center"><input type="submit" value="Submit"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+<script>
+function check()
+{
+ 		var search = document.myForm.q;
+         var recordCount = document.myForm.r;
+             if(search.value == '') 
+             {      
+               alert("Please enter search");
+               search.focus();
+               return false;       
+             }
+             else if(recordCount.value == '')
+             {      
+               alert("Please enter record count");
+               recordCount.focus();
+               return false;       
+             }
+             else
+               return true;
+}	
+</script>
+</html>
