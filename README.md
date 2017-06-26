@@ -1,4 +1,3 @@
-
 Mash
 
 Search for videos, download, and modify video with image overlay.
@@ -9,7 +8,7 @@ Node.js 7.10.0 (https://nodejs.org/en/download/)
 
 FFMPEG N-86310-g220b24c (https://www.ffmpeg.org/download.html)
 
--- Note(s) -- 
+-- Note(s) --
 make sure to add to path global variable in OS to the ffmpeg folder so you can execute globally.
 
 Python 2.7 (https://www.python.org/downloads/)
